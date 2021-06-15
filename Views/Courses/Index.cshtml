@@ -1,0 +1,78 @@
+﻿@model IEnumerable<TrainingManagementSystem.Models.Course>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Course Overview</h2>
+
+<div class="form-group">
+    @Html.ActionLink(
+        "Create a new Course",
+        "Create",
+        "Courses",
+        null,
+        new { @class = "btn btn-primary" }
+        )
+</div>
+@using (Html.BeginForm("Index", "Courses", FormMethod.Get))
+{
+    <div class="form-group">
+        @Html.TextBox("searchString", null, new {placeholder = "Search by Description ...", required = "required"})
+        <button type="submit"><i class="fa fa-search"></i>></button>
+    </div>
+}
+<div class="form-group">
+    @Html.ActionLink(
+        "My Course Report",
+        "Report",
+        "Course",
+        null,
+        new { @class = "btn btn-default"}
+        )
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Category</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.Name</td>
+                <td>@course.Description</td>
+                <td>@course.Category.Name</td>
+                <td>
+                    @Html.ActionLink(
+                        "Details",
+                        "Details",
+                        "Courses",
+                        new { id = course.Id },
+                        new { @class = "btn btn-primary" }
+                        )
+                    @Html.ActionLink(
+                        "Edit",
+                        "Edit",
+                        "Courses",
+                        new { id = course.Id },
+                        new { @class = "btn btn-default" }
+                    )
+                    @Html.ActionLink(
+                        "Delete",
+                        "Delete",
+                        "Courses",
+                        new { id = course.Id },
+                        new { @class = "btn btn-danger" }
+                    )
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
