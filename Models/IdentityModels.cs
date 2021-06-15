@@ -29,6 +29,7 @@ namespace TrainingManagementSystem.Models
         public DbSet<Course> Courses { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Trainee> Trainees { get; set; }
+        public DbSet<CourseTrainer> CourseTrainers { get; set; }
 
         public static ApplicationDbContext Create()
         {
