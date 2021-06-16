@@ -9,7 +9,7 @@ using TrainingManagementSystem.Models;
 
 namespace TrainingManagementSystem.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, staff")]
     public class AdminController : Controller
     {
         private ApplicationDbContext _context;
@@ -39,6 +39,7 @@ namespace TrainingManagementSystem.Controllers
             }
             return View(trainers);
         }
+        [HttpGet]
         public ActionResult ShowStaff()
         {
             var users = _context.Users.ToList();
@@ -51,6 +52,20 @@ namespace TrainingManagementSystem.Controllers
                 }
             }
             return View(staffs);
+        }
+        [HttpGet]
+        public ActionResult ShowTrainee()
+        {
+            var users = _context.Users.ToList();
+            var trainees = new List<ApplicationUser>();
+            foreach (var user in users)
+            {
+                if (_userManager.GetRoles(user.Id)[0].Equals("trainee"))
+                {
+                    trainees.Add(user);
+                }
+            }
+            return View(trainees);
         }
     }
 }
