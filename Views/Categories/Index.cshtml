@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TrainingManagementSystem.Models.Category>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Category List</h2>
+@if (User.IsInRole("staff"))
+{
+    <div class="form-group">
+        @Html.ActionLink(
+            "Create a new Category",
+            "Create",
+            "Categories",
+            null,
+            new { @class = "btn btn-primary" }
+            )
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            @if (User.IsInRole("staff"))
+            {
+                <th scope="col">Action</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+                <td>@category.Description</td>
+                @if (User.IsInRole("staff"))
+                {
+                    <td>
+                        @Html.ActionLink(
+                            "Edit",
+                            "Edit",
+                            "Categories",
+                            new { id = category.Id },
+                            new { @class = "btn btn-default" }
+                            )
+                        @Html.ActionLink(
+                            "Delete",
+                            "Delete",
+                            "Categories",
+                            new { id = category.Id },
+                            new { @class = "btn btn-danger" }
+                            )
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,21 @@
+﻿@model TrainingManagementSystem.Models.Course
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Course Details</h2>
+<div class="form-group">
+    @Html.ActionLink(
+        "Back to Index page",
+        "Index",
+        "Courses",
+        null,
+        new { @class = "btn btn-primary" })
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">Description: @Model.Description </div>
+    <div class="panel-body">
+        <p>Category: @Model.Category.Name</p>
+    </div>
+</div>

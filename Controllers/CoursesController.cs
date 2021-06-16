@@ -46,7 +46,7 @@ namespace TrainingManagementSystem.Controllers
         [HttpPost]
         public ActionResult Create(Course course)
         {
-            if (!ModelState .IsValid)
+            if (!ModelState.IsValid)
             {
                 var viewModel = new CourseCategoriesViewModel()
                 {
@@ -63,6 +63,32 @@ namespace TrainingManagementSystem.Controllers
             };
 
             _context.Courses.Add(newCourse);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var course = _context.Courses
+                .SingleOrDefault(t => t.Id == id);
+
+            if (course == null) return HttpNotFound();
+
+            return View(course);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var course = _context.Courses
+                .SingleOrDefault(c => c.Id == id);
+
+            if (course == null) return HttpNotFound();
+
+            _context.Courses.Remove(course);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
