@@ -1,0 +1,27 @@
+﻿@model TrainingManagementSystem.ViewModels.CategoriesViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit a Category</h2>
+@using (Html.BeginForm("Edit", "Categories", FormMethod.Post))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.Category.Id)
+    <div class="form-group">
+        @Html.LabelFor(m => m.Category.Name)
+        @Html.EditorFor(m => m.Category.Name, new { HtmlAttributes = new { @class = "form-control"}})
+        @Html.ValidationMessageFor(m => m.Category.Name, "", new { @class = "text-danger"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Category.Description)
+        @Html.EditorFor(m => m.Category.Description, new { HtmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Category.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </div>
+}
+

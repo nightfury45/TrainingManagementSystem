@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TrainingManagementSystem.Models;
+using TrainingManagementSystem.ViewModels;
 
 namespace TrainingManagementSystem.Controllers
 {
@@ -62,6 +63,49 @@ namespace TrainingManagementSystem.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var categoryInDb = _context.Categories
+                .SingleOrDefault(c => c.Id == id);
+            if (categoryInDb == null) return HttpNotFound();
+
+            var viewModel = new CategoriesViewModel()
+            {
+                Category = categoryInDb
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CategoriesViewModel()
+                {
+                    Category = category
+                };
+                return View(viewModel);
+            }
+
+            var categoryInDb = _context.Categories
+                .SingleOrDefault(c => c.Id == category.Id);
+
+            if (categoryInDb == null) return HttpNotFound();
+
+            categoryInDb.Name = category.Name;
+            categoryInDb.Description = category.Description;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+
         }
     }
 }
