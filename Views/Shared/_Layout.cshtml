@@ -26,6 +26,8 @@
                     {
                         <li>@Html.ActionLink("Courses", "Index", "Courses")</li>
                         <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+                        <li> @Html.ActionLink("Show Trainers", "ShowTrainer", "Admin")</li>
+                        <li> @Html.ActionLink("Show Trainees", "ShowTrainee", "Admin")</li>
                     }
                     @if (User.IsInRole("admin"))
                     {
