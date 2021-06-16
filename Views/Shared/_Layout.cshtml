@@ -27,6 +27,11 @@
                         <li>@Html.ActionLink("Courses", "Index", "Courses")</li>
                         <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
                     }
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li> @Html.ActionLink("Show Trainers", "ShowTrainer", "Admin")</li>
+                        <li> @Html.ActionLink("Show Staffs", "ShowStaff", "Admin")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
