@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TrainingManagementSystem.Models.ApplicationUser>
+@{
+    ViewBag.Title = "ShowStaff";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Show Staffs</h2>
+        <ul>
+            <li class="list-group-item active">
+                All Staffs
+
+            </li>
+            @foreach (var user in Model)
+            {
+                <li class="list-group-item">@user.UserName</li>
+            }
+        </ul>
+    </div>
+</div>
+

@@ -15,12 +15,53 @@ namespace TrainingManagementSystem.Controllers
         {
             _context = new ApplicationDbContext();
         }
-        [Authorize]
+        [Authorize(Roles = "admin, staff")]
         // GET: Categories
         public ActionResult Index()
         {
-            var catetgories = _context.Categories.ToList();
-            return View(catetgories);
+            var categories = _context.Categories.ToList();
+            return View(categories);
+        }
+        [HttpGet]
+        [Authorize(Roles = "admin, staff")]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin, staff")]
+        public ActionResult Create(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
+
+            var newCategory = new Category
+            {
+                Name = category.Name,
+                Description = category.Description
+            };
+
+            _context.Categories.Add(newCategory);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var category = _context.Categories
+                .SingleOrDefault(c => c.Id == id);
+
+            if (category == null) return HttpNotFound();
+
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
