@@ -1,10 +1,12 @@
-﻿ using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TrainingManagementSystem.Models;
 using TrainingManagementSystem.ViewModels;
+using System.Data.Entity;
 
 namespace TrainingManagementSystem.Controllers
 {
@@ -18,10 +20,16 @@ namespace TrainingManagementSystem.Controllers
         }
         [Authorize(Roles = "admin, staff")]
         // GET: Categories
-        public ActionResult Index()
+
+        public ActionResult Index(string searchString)
         {
-            var categories = _context.Categories.ToList();
-            return View(categories);
+            var category = _context.Categories
+                .ToList();
+            if (!searchString.IsNullOrWhiteSpace())
+            {
+                category = category.Where(c => c.Name.ToLower().Contains(searchString)).ToList();
+            }
+            return View(category);
         }
         [HttpGet]
         [Authorize(Roles = "admin, staff")]

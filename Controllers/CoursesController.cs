@@ -8,6 +8,8 @@ using TrainingManagementSystem.Models;
 using System.Data.Entity;
 using Microsoft.Ajax.Utilities;
 using TrainingManagementSystem.ViewModels;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystem.Controllers
 {
@@ -23,16 +25,16 @@ namespace TrainingManagementSystem.Controllers
 
 
         // GET: Courses
-        public ActionResult Index(string searchString)
+        public ActionResult Index (string searchString)
         {
-            var courses = _context.Courses
+            var course = _context.Courses
                 .Include(c => c.Category)
                 .ToList();
             if (!searchString.IsNullOrWhiteSpace())
             {
-                courses = courses.Where(c => c.Description.Contains(searchString)).ToList();
+                course = course.Where(c => c.Name.ToLower().Contains(searchString)).ToList();
             }
-            return View(courses);
+            return View(course);
         }
         [HttpGet]
         public ActionResult Create()
@@ -69,9 +71,11 @@ namespace TrainingManagementSystem.Controllers
         }
         public ActionResult Details(int? id)
         {
+
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
             var course = _context.Courses
+                .Include(t => t.Category)
                 .SingleOrDefault(t => t.Id == id);
 
             if (course == null) return HttpNotFound();
@@ -139,6 +143,30 @@ namespace TrainingManagementSystem.Controllers
 
             return RedirectToAction("Index");
 
+        }
+
+        [HttpGet]
+        public ActionResult Report()
+        {
+            var viewModel = new List<StatisticalReportViewModel>();
+
+            var coursesInDb = _context.Courses
+                .Include(t => t.Category)
+                .ToList();
+
+            var coursesGroupByName = coursesInDb.GroupBy(t => t.Category.Name).ToList();
+
+            foreach (var categoryGroup in coursesGroupByName)
+            {
+                var categoryQuantity = categoryGroup.Select(c => c.Category).Count();
+                viewModel.Add(new StatisticalReportViewModel()
+                {
+                    CategoryName = categoryGroup.Key,
+                    CategoryQuantity = categoryQuantity
+                });
+            }
+
+            return View(viewModel);
         }
     }
 }

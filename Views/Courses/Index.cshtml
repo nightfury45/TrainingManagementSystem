@@ -17,17 +17,17 @@
 @using (Html.BeginForm("Index", "Courses", FormMethod.Get))
 {
     <div class="form-group">
-        @Html.TextBox("searchString", null, new {placeholder = "Search by Description ...", required = "required"})
-        <button type="submit"><i class="fa fa-search"></i>></button>
+        @Html.TextBox("searchString", null, new { placeholder = "Search by Name ..."})
+        <button type="submit"><i class="fa fa-search"></i>Search</button>
     </div>
 }
 <div class="form-group">
     @Html.ActionLink(
         "My Course Report",
         "Report",
-        "Course",
+        "Courses",
         null,
-        new { @class = "btn btn-default"}
+        new { @class = "btn btn-default" }
         )
 </div>
 
