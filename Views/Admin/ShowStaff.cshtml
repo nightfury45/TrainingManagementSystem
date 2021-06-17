@@ -2,20 +2,21 @@
 @{
     ViewBag.Title = "ShowStaff";
 }
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Show Staffs</h2>
-        <ul>
-            <li class="list-group-item active">
-                All Staffs
-
-            </li>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">All Staffs</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
             @foreach (var user in Model)
             {
-                <li class="list-group-item">@user.UserName</li>
+                <th class="list-group-item">@user.UserName</th>
             }
-        </ul>
-    </div>
-</div>
+            <td>Details</td>
+        </tr>
+    </tbody>
+</table>
 
