@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "StaffDetails";
+}
+
+<h2>Staff Details</h2>
+
+<div class="form-group">
+    @Html.ActionLink(
+        "Back to Index page",
+        "ShowStaff",
+        "Admin",
+        null,
+        new { @class = "btn btn-primary" })
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">UserId: @Model.Id </div>
+    <div class="panel-body">
+        <p>Email: @Model.Email</p>
+    </div>
+</div>
