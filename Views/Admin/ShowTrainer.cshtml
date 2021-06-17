@@ -13,7 +13,7 @@
 </div>
 
 
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th scope="col">All Trainers</th>
@@ -21,22 +21,20 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            @foreach (var user in Model)
-            {
-                <th class="list-group-item">@user.UserName</th>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td class="list-group-item">@user.UserName</td>
                 <td>
                     @Html.ActionLink(
                             "Details",
                             "TrainerDetails",
                             "Admin",
-                            new { id = user.Id},
+                            new { id = user.Id },
                             new { @class = "btn btn-primary" }
                             )
                 </td>
-            }
-
-        </tr>
+            </tr>
+        }
     </tbody>
 </table>
-
