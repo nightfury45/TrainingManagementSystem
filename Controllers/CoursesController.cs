@@ -168,5 +168,133 @@ namespace TrainingManagementSystem.Controllers
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        public ActionResult ViewTrainees(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            var trainees = _context.CourseTrainees
+                .Include(c => c.Trainee)
+                .Where(c => c.CourseId == id)
+                .Select(c => c.Trainee);
+            ViewBag.CourseId = id;
+
+            return View(trainees);
+        }
+
+        [HttpGet]
+        public ActionResult ViewTrainers(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            var trainers = _context.CourseTrainers
+                .Include(c => c.Trainer)
+                .Where(c => c.CourseId == id)
+                .Select(c => c.Trainer);
+            ViewBag.CourseId = id;
+
+            return View(trainers);
+        }
+
+
+        [HttpGet]
+        public ActionResult AddTrainees(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            if (_context.Courses.SingleOrDefault(t => t.Id == id) == null)
+                return HttpNotFound();
+
+            var traineesInDb = _context.Trainees.ToList();
+
+            var traineesInCourse = _context.CourseTrainees
+                    .Include(t => t.Trainee)
+                    .Where(t => t.CourseId == id)
+                    .Select(t => t.Trainee)
+                    .ToList();
+
+            var traineesToAdd = new List<Trainee>();
+
+            foreach (var trainee in traineesInDb)
+            {
+                if (!traineesInCourse.Contains(trainee))
+                    traineesToAdd.Add(trainee);
+            }
+
+            var viewModel = new CourseTraineesViewModel
+            {
+                CourseId = (int)id,
+                Trainees = traineesToAdd
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddTrainees(CourseTrainee model)
+        {
+            var courseTrainee = new CourseTrainee
+            {
+                CourseId = model.CourseId,
+                TraineeId = model.TraineeId
+            };
+
+            _context.CourseTrainees.Add(courseTrainee);
+            _context.SaveChanges();
+
+            return RedirectToAction("View Members", new { id = model.CourseId });
+        }
+
+        [HttpGet]
+        public ActionResult AddTrainers(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            if (_context.Courses.SingleOrDefault(t => t.Id == id) == null)
+                return HttpNotFound();
+
+            var trainersInDb = _context.Trainers.ToList();
+
+            var trainersInCourse = _context.CourseTrainers
+                    .Include(t => t.Trainer)
+                    .Where(t => t.CourseId == id)
+                    .Select(t => t.Trainer)
+                    .ToList();
+
+            var trainersToAdd = new List<Trainer>();
+
+            foreach (var trainer in trainersInDb)
+            {
+                if (!trainersInCourse.Contains(trainer))
+                    trainersToAdd.Add(trainer);
+            }
+
+            var viewModel = new CourseTrainersViewModel
+            {
+                CourseId = (int)id,
+                Trainers = trainersToAdd
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddTrainers(CourseTrainer model)
+        {
+            var courseTrainer = new CourseTrainer
+            {
+                CourseId = model.CourseId,
+                TrainerId = model.TrainerId
+            };
+
+            _context.CourseTrainers.Add(courseTrainer);
+            _context.SaveChanges();
+
+            return RedirectToAction("View Members", new { id = model.CourseId });
+        }
+
+
+
     }
 }

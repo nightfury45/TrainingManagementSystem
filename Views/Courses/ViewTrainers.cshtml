@@ -1,0 +1,35 @@
+﻿@model IEnumerable<TrainingManagementSystem.Models.Trainer>
+@{
+    ViewBag.Title = "ViewTrainers";
+}
+
+<h2>Trainers in Course</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <ul class="list-group">
+            <li class="list-group-item active">
+                Trainers in Course
+                <span class="badge">@Model.Count()</span>
+            </li>
+            @foreach (var trainer in Model)
+            {
+                <li class="list-group-item">
+                    @trainer.Email
+                    <div>
+                        <span class="text-right">
+                            @Html.ActionLink(
+                                        "Remove",
+                                        "RemoveTrainer",
+                                        "Courses",
+                                        new { id = ViewBag.CourseId, trainerId = trainer.UserId },
+                                        new { @class = "text-danger text-right" }
+                                        )
+                        </span>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

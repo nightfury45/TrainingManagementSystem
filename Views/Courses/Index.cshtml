@@ -71,6 +71,36 @@
                         new { id = course.Id },
                         new { @class = "btn btn-danger" }
                     )
+                    <br />
+                    @Html.ActionLink(
+                        "See Trainees",
+                        "ViewTrainees",
+                        "Courses",
+                        new { id = course.Id },
+                        new { @class = "btn btn-success" }
+                        )
+                    @Html.ActionLink(
+                        "See Trainers",
+                        "ViewTrainers",
+                        "Courses",
+                        new { id = course.Id },
+                        new { @class = "btn btn-success" }
+                        )
+                    <br />
+                    @Html.ActionLink(
+                        "Add Trainees",
+                        "AddTrainees",
+                        "Courses",
+                        new { id = course.Id },
+                        new { @class = "btn btn-primary" }
+                        )
+                    @Html.ActionLink(
+                        "Add Trainers",
+                        "AddTrainers",
+                        "Courses",
+                        new { id = course.Id },
+                        new { @class = "btn btn-primary" }
+                        )
                 </td>
             </tr>
         }

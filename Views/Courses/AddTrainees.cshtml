@@ -1,0 +1,21 @@
+﻿@model TrainingManagementSystem.ViewModels.CourseTraineesViewModel
+@{
+    ViewBag.Title = "AddTrainees";
+}
+
+<h2>Add Trainees to Course</h2>
+
+@using (Html.BeginForm("AddTrainees", "Courses", FormMethod.Post))
+{
+    <div class="form-group">
+        Username:
+        @Html.HiddenFor(m => m.CourseId)
+        @Html.DropDownListFor(m => m.TraineeId,
+            new SelectList(Model.Trainees, "Id", "Username"),
+            new { @class = "form-control"})
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Add trainees</button>
+    </div>
+}
+
