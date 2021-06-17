@@ -10,6 +10,7 @@ using Microsoft.Ajax.Utilities;
 using TrainingManagementSystem.ViewModels;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace TrainingManagementSystem.Controllers
 {
@@ -243,7 +244,7 @@ namespace TrainingManagementSystem.Controllers
             _context.CourseTrainees.Add(courseTrainee);
             _context.SaveChanges();
 
-            return RedirectToAction("View Trainees", new { id = model.CourseId });
+            return RedirectToAction("ViewTrainees", new { id = model.CourseId });
         }
 
         [HttpGet]
@@ -291,12 +292,11 @@ namespace TrainingManagementSystem.Controllers
             _context.CourseTrainers.Add(courseTrainer);
             _context.SaveChanges();
 
-            return RedirectToAction("View Trainees", new { id = model.CourseId });
+            return RedirectToAction("ViewTrainees", new { id = model.CourseId });
         }
 
         [HttpGet]
         [Authorize(Roles = "staff")]
-
         public ActionResult RemoveTrainee(int id, string userId)
         {
             var courseTraineeToRemove = _context.CourseTrainees
@@ -307,12 +307,11 @@ namespace TrainingManagementSystem.Controllers
 
             _context.CourseTrainees.Remove(courseTraineeToRemove);
             _context.SaveChanges();
-            return RedirectToAction("Members", new { id = id });
+            return RedirectToAction("ViewTrainees", new { id = id });
         }
 
         [HttpGet]
         [Authorize(Roles = "staff")]
-
         public ActionResult RemoveTrainer(int id, string userId)
         {
             var courseTrainerToRemove = _context.CourseTrainers
@@ -323,7 +322,7 @@ namespace TrainingManagementSystem.Controllers
 
             _context.CourseTrainers.Remove(courseTrainerToRemove);
             _context.SaveChanges();
-            return RedirectToAction("Members", new { id = id });
+            return RedirectToAction("ViewTrainers", new { id = id });
         }
 
 
