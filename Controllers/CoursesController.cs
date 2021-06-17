@@ -75,8 +75,8 @@ namespace TrainingManagementSystem.Controllers
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
             var course = _context.Courses
-                .Include(t => t.Category)
-                .SingleOrDefault(t => t.Id == id);
+                .Include(c => c.Category)
+                .SingleOrDefault(c => c.Id == id);
 
             if (course == null) return HttpNotFound();
 
@@ -210,9 +210,9 @@ namespace TrainingManagementSystem.Controllers
             var traineesInDb = _context.Trainees.ToList();
 
             var traineesInCourse = _context.CourseTrainees
-                    .Include(t => t.Trainee)
-                    .Where(t => t.CourseId == id)
-                    .Select(t => t.Trainee)
+                    .Include(c => c.Trainee)
+                    .Where(c => c.CourseId == id)
+                    .Select(c => c.Trainee)
                     .ToList();
 
             var traineesToAdd = new List<Trainee>();
@@ -258,9 +258,9 @@ namespace TrainingManagementSystem.Controllers
             var trainersInDb = _context.Trainers.ToList();
 
             var trainersInCourse = _context.CourseTrainers
-                    .Include(t => t.Trainer)
-                    .Where(t => t.CourseId == id)
-                    .Select(t => t.Trainer)
+                    .Include(c => c.Trainer)
+                    .Where(c => c.CourseId == id)
+                    .Select(c => c.Trainer)
                     .ToList();
 
             var trainersToAdd = new List<Trainer>();
@@ -292,6 +292,38 @@ namespace TrainingManagementSystem.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("View Trainees", new { id = model.CourseId });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "staff")]
+
+        public ActionResult RemoveTrainee(int id, string userId)
+        {
+            var courseTraineeToRemove = _context.CourseTrainees
+                .SingleOrDefault(c => c.CourseId == id && c.TraineeId == userId);
+
+            if (courseTraineeToRemove == null)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            _context.CourseTrainees.Remove(courseTraineeToRemove);
+            _context.SaveChanges();
+            return RedirectToAction("Members", new { id = id });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "staff")]
+
+        public ActionResult RemoveTrainer(int id, string userId)
+        {
+            var courseTrainerToRemove = _context.CourseTrainers
+                .SingleOrDefault(c => c.CourseId == id && c.TrainerId == userId);
+
+            if (courseTrainerToRemove == null)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            _context.CourseTrainers.Remove(courseTrainerToRemove);
+            _context.SaveChanges();
+            return RedirectToAction("Members", new { id = id });
         }
 
 
