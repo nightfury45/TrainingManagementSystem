@@ -67,5 +67,16 @@ namespace TrainingManagementSystem.Controllers
             }
             return View(trainees);
         }
+        public ActionResult TrainerDetails(string id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var trainer = _context.Trainers
+                .SingleOrDefault(t => t.UserId == id);
+
+            if (trainer == null) return HttpNotFound();
+
+            return View(trainer);
+        }
     }
 }
