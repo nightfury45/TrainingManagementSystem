@@ -17,17 +17,31 @@ namespace TrainingManagementSystem.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
+
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationDbContext context)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            Context = context;
         }
-
+        public ApplicationDbContext Context
+        {
+            get
+            {
+                return _context ?? new ApplicationDbContext();
+            }
+            private set
+            {
+                _context = value;
+            }
+        }
         public ApplicationSignInManager SignInManager
         {
             get
@@ -141,7 +155,43 @@ namespace TrainingManagementSystem.Controllers
         {
             return View();
         }
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public ActionResult CreateTrainer()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> CreateTrainer(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "trainer");
+                    var trainer = new Trainer
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        UserId = user.Id,
+                        Type = model.Type,
+                        WorkPlace = model.WorkPlace,
+                        Phone = model.Phone,
+                        Education = model.Education
+                    };
+                    _context.Trainers.Add(trainer);
+                    _context.SaveChanges();
 
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
         //
         // POST: /Account/Register
         [HttpPost]

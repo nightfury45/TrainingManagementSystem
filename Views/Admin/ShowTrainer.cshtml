@@ -2,20 +2,41 @@
 @{
     ViewBag.Title = "ShowTrainer";
 }
+<h2>Trainers List</h2>
+<div class="form-group">
+    @Html.ActionLink(
+        "Create A Trainer",
+        "CreateTrainer",
+        "Account",
+        null,
+        new { @class = "btn btn-primary" })
+</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Show Trainers</h2>
-        <ul>
-            <li class="list-group-item active">
-                All Trainers
 
-            </li>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">All Trainers</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
             @foreach (var user in Model)
             {
-                <li class="list-group-item">@user.UserName</li>
+                <th class="list-group-item">@user.UserName</th>
+                <td>
+                    @Html.ActionLink(
+                            "Details",
+                            "TrainerDetails",
+                            "Admin",
+                            new { id = user.Id},
+                            new { @class = "btn btn-primary" }
+                            )
+                </td>
             }
-        </ul>
-    </div>
-</div>
+
+        </tr>
+    </tbody>
+</table>
 
