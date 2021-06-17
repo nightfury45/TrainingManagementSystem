@@ -192,6 +192,34 @@ namespace TrainingManagementSystem.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public ActionResult CreateStaff()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> CreateStaff(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "staff");
+                    _context.SaveChanges();
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
         //
         // POST: /Account/Register
         [HttpPost]

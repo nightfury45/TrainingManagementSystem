@@ -291,6 +291,8 @@
     <Content Include="Views\Admin\ShowTrainee.cshtml" />
     <Content Include="Views\Admin\TrainerDetails.cshtml" />
     <Content Include="Views\Account\CreateTrainer.cshtml" />
+    <Content Include="Views\Account\CreateStaff.cshtml" />
+    <Content Include="Views\Admin\StaffDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

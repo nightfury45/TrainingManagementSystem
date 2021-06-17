@@ -2,7 +2,18 @@
 @{
     ViewBag.Title = "ShowStaff";
 }
-<table class="table">
+<h2>Trainers List</h2>
+<div class="form-group">
+    @Html.ActionLink(
+        "Create A Staff",
+        "CreateStaff",
+        "Account",
+        null,
+        new { @class = "btn btn-primary" })
+</div>
+
+
+<table class="table table-bordered">
     <thead>
         <tr>
             <th scope="col">All Staffs</th>
@@ -10,13 +21,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            @foreach (var user in Model)
-            {
-                <th class="list-group-item">@user.UserName</th>
-            }
-            <td>Details</td>
-        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td class="list-group-item">@user.UserName</td>
+                <td>
+                    @Html.ActionLink(
+                            "Details",
+                            "StaffDetails",
+                            "Admin",
+                            new { id = user.Id },
+                            new { @class = "btn btn-primary" }
+                            )
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
