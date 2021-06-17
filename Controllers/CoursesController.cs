@@ -243,7 +243,7 @@ namespace TrainingManagementSystem.Controllers
             _context.CourseTrainees.Add(courseTrainee);
             _context.SaveChanges();
 
-            return RedirectToAction("View Members", new { id = model.CourseId });
+            return RedirectToAction("View Trainees", new { id = model.CourseId });
         }
 
         [HttpGet]
@@ -291,7 +291,7 @@ namespace TrainingManagementSystem.Controllers
             _context.CourseTrainers.Add(courseTrainer);
             _context.SaveChanges();
 
-            return RedirectToAction("View Members", new { id = model.CourseId });
+            return RedirectToAction("View Trainees", new { id = model.CourseId });
         }
 
 

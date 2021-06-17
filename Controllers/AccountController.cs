@@ -155,14 +155,57 @@ namespace TrainingManagementSystem.Controllers
         {
             return View();
         }
+
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, staff")]
+        public ActionResult CreateTrainee()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Authorize(Roles = "admin, staff")]
+        public async Task<ActionResult> CreateTrainee(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "trainee");
+                    var trainee = new Trainee
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        UserId = user.Id,
+                        Age = model.Age,
+                        DoB = model.DoB,
+                        ProgrammingLanguage = model.ProgrammingLanguage,
+                        Education = model.Education,
+                        TOEICScore = model.TOEICScore,
+                        ExperienceDetail = model.ExperienceDetail,
+                        Department = model.Department,
+                        Address = model.Address
+                    };
+                    _context.Trainees.Add(trainee);
+                    _context.SaveChanges();
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin, staff")]
         public ActionResult CreateTrainer()
         {
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, staff")]
         public async Task<ActionResult> CreateTrainer(RegisterViewModel model)
         {
             if (ModelState.IsValid)

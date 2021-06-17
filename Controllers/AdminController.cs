@@ -78,6 +78,7 @@ namespace TrainingManagementSystem.Controllers
 
             return View(trainer);
         }
+
         public ActionResult StaffDetails(string id)
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
@@ -88,6 +89,18 @@ namespace TrainingManagementSystem.Controllers
             if (staff == null) return HttpNotFound();
 
             return View(staff);
+        }
+
+        public ActionResult TraineeDetails(string id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var trainee = _context.Trainees
+                .SingleOrDefault(t => t.UserId == id);
+
+            if (trainee == null) return HttpNotFound();
+
+            return View(trainee);
         }
     }
 }
