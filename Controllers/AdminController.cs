@@ -179,8 +179,23 @@ namespace TrainingManagementSystem.Controllers
             return RedirectToAction("index");
 
         }
+        public ActionResult Delete(string id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
+            var userId = User.Identity.GetUserId();
+            var del2 = _context.Trainers
+                .SingleOrDefault(d => d.UserId == id);
+            var del = _context.Users
+                .SingleOrDefault(d => d.Id == id);
 
+            if (del == null) return HttpNotFound();
 
+            _context.Trainers.Remove(del2);
+            _context.Users.Remove(del);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
