@@ -30,8 +30,15 @@
                                     "Details",
                                     "TrainerDetails",
                                     "Admin",
-                                    new { id = user.Id},
+                                    new { id = user.Id },
                                     new { @class = "btn btn-primary" }
+                                    )
+                            @Html.ActionLink(
+                                    "Edit",
+                                    "TrainerEdit",
+                                    "Admin",
+                                    new { id = user.Id },
+                                    new { @class = "btn btn-default" }
                                     )
                         </td>
                 </tr>

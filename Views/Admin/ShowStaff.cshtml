@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "ShowStaff";
 }
-<h2>Trainers List</h2>
+<h2>Staffs List</h2>
 <div class="form-group">
     @Html.ActionLink(
         "Create A Staff",
@@ -32,6 +32,13 @@
                             "Admin",
                             new { id = user.Id },
                             new { @class = "btn btn-primary" }
+                            )
+                    @Html.ActionLink(
+                            "Edit",
+                            "StaffEdit",
+                            "Admin",
+                            new { id = user.Id },
+                            new { @class = "btn btn-default" }
                             )
                 </td>
             </tr>

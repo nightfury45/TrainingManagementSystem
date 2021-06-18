@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TrainingManagementSystem.Models;
+using TrainingManagementSystem.ViewModels;
 
 namespace TrainingManagementSystem.Controllers
 {
@@ -89,5 +90,97 @@ namespace TrainingManagementSystem.Controllers
 
             return View(staff);
         }
+        [HttpGet]
+        public ActionResult TrainerEdit(string id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var trainerInDb = _context.Trainers
+                .SingleOrDefault(t => t.UserId == id);
+
+            if (trainerInDb == null) return HttpNotFound();
+
+            var viewModel = new TrainerViewModel()
+            {
+                Trainer = trainerInDb,
+
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult TrainerEdit(Trainer trainer)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new TrainerViewModel()
+                {
+                    Trainer = trainer,
+                };
+                return View(viewModel);
+            }
+
+            var trainerInDb = _context.Trainers
+                .SingleOrDefault(t => t.UserId == trainer.UserId);
+
+            if (trainerInDb == null) return HttpNotFound();
+
+            trainerInDb.Name = trainer.Name;
+            trainerInDb.Type = trainer.Type;
+            trainerInDb.Email = trainer.Email;
+            trainerInDb.WorkPlace = trainer.WorkPlace;
+            trainerInDb.Phone = trainer.Phone;
+            trainerInDb.Education = trainer.Education;
+            _context.SaveChanges();
+
+            return RedirectToAction("index");
+
+        }
+
+        [HttpGet]
+        public ActionResult StaffEdit(string id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var staff = _context.Users
+                .SingleOrDefault(s => s.Id == id);
+            if (staff == null) return HttpNotFound();
+
+            var viewModel = new StaffViewModel()
+            {
+                User = staff,
+
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult StaffEdit(ApplicationUser user)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new StaffViewModel()
+                {
+                    User = user,
+                };
+                return View(viewModel);
+            }
+
+            var staff = _context.Users
+                .SingleOrDefault(s => s.Id == user.Id);
+
+            if (staff == null) return HttpNotFound();
+
+            staff.Email = user.Email;
+            _context.SaveChanges();
+
+            return RedirectToAction("index");
+
+        }
+
+
+
     }
 }

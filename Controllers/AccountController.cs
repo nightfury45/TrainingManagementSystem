@@ -156,13 +156,13 @@ namespace TrainingManagementSystem.Controllers
             return View();
         }
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, staff")]
         public ActionResult CreateTrainer()
         {
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, staff")]
         public async Task<ActionResult> CreateTrainer(RegisterViewModel model)
         {
             if (ModelState.IsValid)
