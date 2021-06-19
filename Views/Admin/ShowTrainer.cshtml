@@ -47,6 +47,13 @@
                                     new { id = user.Id },
                                     new { @class = "btn btn-danger" }
                                     )
+                            @Html.ActionLink(
+                                    "ChangePassword",
+                                    "ChangePassword",
+                                    "Account",
+                                    new { id = user.Id },
+                                    new { @class = "btn btn-danger" }
+                                    )
                         </td>
                 </tr>
             }

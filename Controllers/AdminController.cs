@@ -183,7 +183,6 @@ namespace TrainingManagementSystem.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
-            var userId = User.Identity.GetUserId();
             var del = _context.Trainers
                 .SingleOrDefault(d => d.UserId == id);
             var del2 = _context.Users
@@ -201,7 +200,6 @@ namespace TrainingManagementSystem.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
-            var userId = User.Identity.GetUserId();
             var del = _context.Users
                 .SingleOrDefault(d => d.Id == id);
 
@@ -212,6 +210,7 @@ namespace TrainingManagementSystem.Controllers
 
             return RedirectToAction("Index");
         }
+
 
     }
 }
