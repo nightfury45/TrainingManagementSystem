@@ -190,7 +190,7 @@ namespace TrainingManagementSystem.Controllers
                     _context.Trainees.Add(trainee);
                     _context.SaveChanges();
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ShowTrainee", "Admin");
                 }
                 AddErrors(result);
             }
@@ -228,7 +228,7 @@ namespace TrainingManagementSystem.Controllers
                     _context.Trainers.Add(trainer);
                     _context.SaveChanges();
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ShowTrainer", "Admin");
                 }
                 AddErrors(result);
             }

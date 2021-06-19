@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using TrainingManagementSystem.Models;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
+using Microsoft.Ajax.Utilities;
 
 namespace TrainingManagementSystem.Controllers
 {
@@ -33,7 +34,7 @@ namespace TrainingManagementSystem.Controllers
         [HttpGet]
         public ActionResult ShowTrainer()
         {
-            var users = _context.Users.ToList();
+           var users = _context.Users.ToList();
             var trainers = new List<ApplicationUser>();
             foreach (var user in users)
             {
@@ -87,18 +88,19 @@ namespace TrainingManagementSystem.Controllers
             return View(staffs);
         }
         [HttpGet]
-        public ActionResult ShowTrainee()
+        public ActionResult ShowTrainee(string searchString)
         {
-            var users = _context.Users.ToList();
-            var trainees = new List<ApplicationUser>();
-            foreach (var user in users)
+            var trainee = _context.Trainees
+                .ToList();
+
+            if ( !searchString.IsNullOrWhiteSpace())
             {
-                if (_userManager.GetRoles(user.Id)[0].Equals("trainee"))
-                {
-                    trainees.Add(user);
-                }
+                trainee = trainee.Where(t => t.Email.ToLower().Contains(searchString) ||
+                                             t.ProgrammingLanguage.Contains(searchString) ||
+                                             t.TOEICScore.ToString().Contains(searchString))
+                                            .ToList();
             }
-            return View(trainees);
+            return View(trainee);
         }
         public ActionResult TrainerDetails(string id)
         {

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TrainingManagementSystem.Models.ApplicationUser>
+﻿@model IEnumerable<TrainingManagementSystem.Models.Trainee>
 @{
     ViewBag.Title = "ShowTrainee";
 }
@@ -11,6 +11,13 @@
         null,
         new { @class = "btn btn-primary" })
 </div>
+@using (Html.BeginForm("ShowTrainee", "Admin", FormMethod.Get))
+{
+    <div class="form-group">
+        @Html.TextBox("searchString", null, new { placeholder = "Search by Name ..." })
+        <button type="submit"><i class="fa fa-search"></i>Search</button>
+    </div>
+}
 
 
 <table class="table table-bordered">
@@ -24,13 +31,13 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td class="list-group-item">@user.UserName</td>
+                <td class="list-group-item">@user.Email</td>
                 <td>
                     @Html.ActionLink(
                             "Details",
                             "TraineeDetails",
                             "Admin",
-                            new { id = user.Id },
+                            new { id = user.UserId},
                             new { @class = "btn btn-primary" }
                             )
                 </td>
