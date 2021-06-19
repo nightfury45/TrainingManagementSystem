@@ -33,11 +33,25 @@
                             new { @class = "btn btn-primary" }
                             )
                     @Html.ActionLink(
+                            "Details",
+                            "TrainerDetails",
+                            "Admin",
+                            new { id = user.Id },
+                            new { @class = "btn btn-default" }
+                            )
+                    @Html.ActionLink(
                             "Change Password",
                             "ChangePassword",
                             "Admin",
                             new { id = user.Id },
-                            new { @class = "btn btn-primary" }
+                            new { @class = "btn btn-warning" }
+                            )
+                    @Html.ActionLink(
+                            "Delete",
+                            "TrainerDelete",
+                            "Admin",
+                            new { id = user.Id },
+                            new { @class = "btn btn-danger" }
                             )
                 </td>
             </tr>

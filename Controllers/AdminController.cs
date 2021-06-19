@@ -57,7 +57,7 @@ namespace TrainingManagementSystem.Controllers
             var result = await UserManager.ResetPasswordAsync(id, token, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("ShowTrainer", "Admin");
+                return RedirectToAction("Index");
             }
             return View(result);
         }
@@ -182,7 +182,7 @@ namespace TrainingManagementSystem.Controllers
             staff.Email = user.Email;
             _context.SaveChanges();
 
-            return RedirectToAction("index");
+            return RedirectToAction("ShowStaff");
 
         }
 
@@ -230,7 +230,7 @@ namespace TrainingManagementSystem.Controllers
             trainerInDb.Education = trainer.Education;
             _context.SaveChanges();
 
-            return RedirectToAction("index");
+            return RedirectToAction("ShowTrainer");
 
         }
         [HttpGet]
@@ -271,10 +271,17 @@ namespace TrainingManagementSystem.Controllers
 
             traineeInDb.Name = trainee.Name;
             traineeInDb.Email = trainee.Email;
+            traineeInDb.Age = trainee.Age;
+            traineeInDb.DoB = trainee.DoB;
             traineeInDb.Education = trainee.Education;
+            traineeInDb.ProgrammingLanguage = trainee.ProgrammingLanguage;
+            traineeInDb.TOEICScore = trainee.TOEICScore;
+            traineeInDb.ExperienceDetail = trainee.ExperienceDetail;
+            traineeInDb.Department = trainee.Department;
+            traineeInDb.Address = trainee.Address;
             _context.SaveChanges();
 
-            return RedirectToAction("index");
+            return RedirectToAction("ShowTrainee");
 
         }
         public ActionResult StaffDelete(string id)
@@ -289,7 +296,7 @@ namespace TrainingManagementSystem.Controllers
             _context.Users.Remove(del);
             _context.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("ShowStaff");
         }
 
         public ActionResult TrainerDelete(string id)
@@ -307,9 +314,26 @@ namespace TrainingManagementSystem.Controllers
             _context.Users.Remove(del2);
             _context.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("ShowTrainer");
         }
 
+        public ActionResult TraineeDelete(string id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var del = _context.Trainees
+                .SingleOrDefault(d => d.UserId == id);
+            var del2 = _context.Users
+                .SingleOrDefault(d => d.Id == id);
+
+            if (del == null) return HttpNotFound();
+
+            _context.Trainees.Remove(del);
+            _context.Users.Remove(del2);
+            _context.SaveChanges();
+
+            return RedirectToAction("ShowTrainee");
+        }
 
     }
 }

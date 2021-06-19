@@ -157,14 +157,14 @@ namespace TrainingManagementSystem.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin, staff")]
-        public ActionResult CreateTrainee()
+        [Authorize(Roles = "admin")]
+        public ActionResult CreateStaff()
         {
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = "admin, staff")]
-        public async Task<ActionResult> CreateTrainee(RegisterViewModel model)
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> CreateStaff(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -172,25 +172,10 @@ namespace TrainingManagementSystem.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "trainee");
-                    var trainee = new Trainee
-                    {
-                        Name = model.Name,
-                        Email = model.Email,
-                        UserId = user.Id,
-                        Age = model.Age,
-                        DoB = model.DoB,
-                        Education = model.Education,
-                        ProgrammingLanguage = model.ProgrammingLanguage,
-                        TOEICScore = model.TOEICScore,
-                        ExperienceDetail = model.ExperienceDetail,
-                        Department = model.Department,
-                        Address = model.Address
-                    };
-                    _context.Trainees.Add(trainee);
+                    UserManager.AddToRole(user.Id, "staff");
                     _context.SaveChanges();
 
-                    return RedirectToAction("ShowTrainee", "Admin");
+                    return RedirectToAction("ShowStaff", "Admin");
                 }
                 AddErrors(result);
             }
@@ -237,14 +222,14 @@ namespace TrainingManagementSystem.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
-        public ActionResult CreateStaff()
+        [Authorize(Roles = "admin, staff")]
+        public ActionResult CreateTrainee()
         {
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult> CreateStaff(RegisterViewModel model)
+        [Authorize(Roles = "admin, staff")]
+        public async Task<ActionResult> CreateTrainee(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -252,10 +237,25 @@ namespace TrainingManagementSystem.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "staff");
+                    UserManager.AddToRole(user.Id, "trainee");
+                    var trainee = new Trainee
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        UserId = user.Id,
+                        Age = model.Age,
+                        DoB = model.DoB,
+                        Education = model.Education,
+                        ProgrammingLanguage = model.ProgrammingLanguage,
+                        TOEICScore = model.TOEICScore,
+                        ExperienceDetail = model.ExperienceDetail,
+                        Department = model.Department,
+                        Address = model.Address
+                    };
+                    _context.Trainees.Add(trainee);
                     _context.SaveChanges();
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ShowTrainee", "Admin");
                 }
                 AddErrors(result);
             }

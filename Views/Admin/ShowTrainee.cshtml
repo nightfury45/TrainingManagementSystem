@@ -14,7 +14,7 @@
 @using (Html.BeginForm("ShowTrainee", "Admin", FormMethod.Get))
 {
     <div class="form-group">
-        @Html.TextBox("searchString", null, new { placeholder = "Search by Name ..." })
+        @Html.TextBox("searchString", null, new { placeholder = "Search by ..." })
         <button type="submit"><i class="fa fa-search"></i>Search</button>
     </div>
 }
@@ -48,12 +48,20 @@
                             new { @class = "btn btn-default" }
                             )
                     @Html.ActionLink(
+                            "Change Password",
+                            "ChangePassword",
+                            "Admin",
+                            new { id = user.UserId },
+                            new { @class = "btn btn-warning" }
+                            )
+                    @Html.ActionLink(
                             "Delete",
                             "TraineeDelete",
                             "Admin",
                             new { id = user.UserId },
                             new { @class = "btn btn-danger" }
                             )
+
 
                 </td>
             </tr>
