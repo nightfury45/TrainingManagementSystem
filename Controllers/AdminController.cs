@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TrainingManagementSystem.Models;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataProtection;
 
 namespace TrainingManagementSystem.Controllers
 {
@@ -14,6 +18,7 @@ namespace TrainingManagementSystem.Controllers
     {
         private ApplicationDbContext _context;
         private UserManager<ApplicationUser> _userManager;
+        
         public AdminController()
         {
             _context = new ApplicationDbContext();
@@ -39,6 +44,34 @@ namespace TrainingManagementSystem.Controllers
             }
             return View(trainers);
         }
+
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(string id, ResetPasswordViewModel model)
+        {
+
+            var provider = new DpapiDataProtectionProvider("TrainingManagementSystem");
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
+
+            UserManager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(
+                provider.Create("Token"));
+
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            var token = await UserManager.GeneratePasswordResetTokenAsync(id);
+            var result = await UserManager.ResetPasswordAsync(id, token, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ShowTrainer", "Admin");
+            }
+            return View(result);
+        }
+
         [HttpGet]
         public ActionResult ShowStaff()
         {

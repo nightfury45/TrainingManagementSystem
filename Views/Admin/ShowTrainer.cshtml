@@ -33,6 +33,13 @@
                             new { id = user.Id },
                             new { @class = "btn btn-primary" }
                             )
+                    @Html.ActionLink(
+                            "Change Password",
+                            "ChangePassword",
+                            "Admin",
+                            new { id = user.Id },
+                            new { @class = "btn btn-primary" }
+                            )
                 </td>
             </tr>
         }

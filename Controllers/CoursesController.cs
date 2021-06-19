@@ -26,6 +26,7 @@ namespace TrainingManagementSystem.Controllers
 
 
         // GET: Courses
+        [Authorize(Roles = "admin, staff")]
         public ActionResult Index (string searchString)
         {
             var course = _context.Courses
@@ -151,8 +152,10 @@ namespace TrainingManagementSystem.Controllers
         {
             var viewModel = new List<StatisticalReportViewModel>();
 
+            var userId = User.Identity.GetUserId();
+
             var coursesInDb = _context.Courses
-                .Include(t => t.Category)
+                .Include(c => c.Category)
                 .ToList();
 
             var coursesGroupByName = coursesInDb.GroupBy(t => t.Category.Name).ToList();
@@ -169,7 +172,6 @@ namespace TrainingManagementSystem.Controllers
 
             return View(viewModel);
         }
-
         [HttpGet]
         public ActionResult ViewTrainees(int? id)
         {
@@ -292,7 +294,7 @@ namespace TrainingManagementSystem.Controllers
             _context.CourseTrainers.Add(courseTrainer);
             _context.SaveChanges();
 
-            return RedirectToAction("ViewTrainees", new { id = model.CourseId });
+            return RedirectToAction("ViewTrainers", new { id = model.CourseId });
         }
 
         [HttpGet]
