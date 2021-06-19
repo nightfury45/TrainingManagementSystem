@@ -37,9 +37,24 @@
                             "Details",
                             "TraineeDetails",
                             "Admin",
-                            new { id = user.UserId},
+                            new { id = user.UserId },
                             new { @class = "btn btn-primary" }
                             )
+                    @Html.ActionLink(
+                            "Edit",
+                            "TraineeEdit",
+                            "Admin",
+                            new { id = user.UserId },
+                            new { @class = "btn btn-default" }
+                            )
+                    @Html.ActionLink(
+                            "Delete",
+                            "TraineeDelete",
+                            "Admin",
+                            new { id = user.UserId },
+                            new { @class = "btn btn-danger" }
+                            )
+
                 </td>
             </tr>
         }
