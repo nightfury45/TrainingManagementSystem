@@ -2,20 +2,39 @@
 @{
     ViewBag.Title = "ShowTrainee";
 }
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Show Trainees</h2>
-        <ul>
-            <li class="list-group-item active">
-                All Trainees
-
-            </li>
-            @foreach (var user in Model)
-            {
-                <li class="list-group-item">@user.UserName</li>
-            }
-        </ul>
-    </div>
+<h2>Trainees List</h2>
+<div class="form-group">
+    @Html.ActionLink(
+        "Create A Trainee",
+        "CreateTrainee",
+        "Account",
+        null,
+        new { @class = "btn btn-primary" })
 </div>
 
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">All Trainees</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td class="list-group-item">@user.UserName</td>
+                <td>
+                    @Html.ActionLink(
+                            "Details",
+                            "TraineeDetails",
+                            "Admin",
+                            new { id = user.Id },
+                            new { @class = "btn btn-primary" }
+                            )
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,26 @@
+﻿@model TrainingManagementSystem.Models.Trainee
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Trainee Info</h2>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        UserId: @Model.UserId
+    </div>
+    <div class="panel-body">
+        <p>Email: @Model.Email</p>
+        <p>Name: @Model.Name</p>
+        <p>Age: @Model.Age</p>
+        <p>Date of Birth: @Model.DoB</p>
+        <p>Education: @Model.Education</p>
+        <p>Programming Language: @Model.ProgrammingLanguage</p>
+        <p>TOEIC Score: @Model.TOEICScore</p>
+        <p>Experience: @Model.ExperienceDetail</p>
+        <p>Department: @Model.Department</p>
+        <p>Address: @Model.Address</p>
+
+    </div>
+</div>
+

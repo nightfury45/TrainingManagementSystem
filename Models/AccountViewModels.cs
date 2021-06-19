@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TrainingManagementSystem.Models
@@ -84,6 +85,13 @@ namespace TrainingManagementSystem.Models
         public string WorkPlace { get; set; }
         public int Phone { get; set; }
         public string Education { get; set; }
+        public int Age { get; set; }
+        public DateTime DoB { get; set; }
+        public string ProgrammingLanguage { get; set; }
+        public int TOEICScore { get; set; }
+        public string ExperienceDetail { get; set; }
+        public string Department { get; set; }
+        public string Address { get; set; }
     }
 
     public class ResetPasswordViewModel

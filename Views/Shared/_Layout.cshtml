@@ -22,6 +22,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li> @Html.ActionLink("Show Trainers", "ShowTrainer", "Admin")</li>
+                        <li> @Html.ActionLink("Show Staffs", "ShowStaff", "Admin")</li>
+                    }
                     @if (User.IsInRole("staff"))
                     {
                         <li>@Html.ActionLink("Courses", "Index", "Courses")</li>
@@ -29,11 +34,14 @@
                         <li> @Html.ActionLink("Show Trainers", "ShowTrainer", "Admin")</li>
                         <li> @Html.ActionLink("Show Trainees", "ShowTrainee", "Admin")</li>
                     }
-                    @if (User.IsInRole("admin"))
+                    @if (User.IsInRole("trainee"))
                     {
-                        <li> @Html.ActionLink("Show Trainers", "ShowTrainer", "Admin")</li>
-                        <li> @Html.ActionLink("Show Staffs", "ShowStaff", "Admin")</li>
+                        <li> @Html.ActionLink("View Course", "", "Admin")</li>
+                        <li> @Html.ActionLink("My Details", "Index", "TraineeInfo")</li>
+
                     }
+
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
