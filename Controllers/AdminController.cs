@@ -44,13 +44,13 @@ namespace TrainingManagementSystem.Controllers
             }
             return View(trainers);
         }
-
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public ActionResult ChangePassword()
         {
             return View();
         }
-
+        [Authorize (Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(string id, ResetPasswordViewModel model)
