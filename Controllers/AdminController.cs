@@ -141,25 +141,6 @@ namespace TrainingManagementSystem.Controllers
 
 
         [HttpGet]
-        public ActionResult TrainerEdit(string id)
-        {
-            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-
-            var trainerInDb = _context.Trainers
-                .SingleOrDefault(t => t.UserId == id);
-
-            if (trainerInDb == null) return HttpNotFound();
-
-            var viewModel = new TrainerViewModel()
-            {
-                Trainer = trainerInDb,
-
-            };
-
-            return View(viewModel);
-        }
-
-        [HttpGet]
         public ActionResult StaffEdit(string id)
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
@@ -199,6 +180,25 @@ namespace TrainingManagementSystem.Controllers
 
             return RedirectToAction("index");
 
+        }
+
+        [HttpGet]
+        public ActionResult TrainerEdit(string id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var trainerInDb = _context.Trainers
+                .SingleOrDefault(t => t.UserId == id);
+
+            if (trainerInDb == null) return HttpNotFound();
+
+            var viewModel = new TrainerViewModel()
+            {
+                Trainer = trainerInDb,
+
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -262,7 +262,5 @@ namespace TrainingManagementSystem.Controllers
 
             return RedirectToAction("Index");
         }
-        
-
     }
 }

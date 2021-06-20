@@ -36,8 +36,9 @@
                     }
                     @if (User.IsInRole("trainee"))
                     {
-                        <li> @Html.ActionLink("View Course", "", "Admin")</li>
-                        <li> @Html.ActionLink("My Details", "Index", "TraineeInfo")</li>
+                        <li> @Html.ActionLink("All Course", "ShowAllCourse", "Trainees")</li>
+                        <li> @Html.ActionLink("My Course", "ShowAssignCourse", "Trainees")</li>
+                        <li> @Html.ActionLink("My Details", "Index", "Trainees")</li>
 
                     }
 
