@@ -24,7 +24,6 @@ namespace TrainingManagementSystem.Controllers
             _context = new ApplicationDbContext();
         }
 
-
         // GET: Courses
         [Authorize(Roles = "admin, staff")]
         public ActionResult Index (string searchString)

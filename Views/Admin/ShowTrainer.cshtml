@@ -39,13 +39,16 @@
                             new { id = user.Id },
                             new { @class = "btn btn-default" }
                             )
-                    @Html.ActionLink(
-                            "Change Password",
-                            "ChangePassword",
-                            "Admin",
-                            new { id = user.Id },
-                            new { @class = "btn btn-warning" }
-                            )
+                    @if(User.IsInRole("admin"))
+                    { 
+                        @Html.ActionLink(
+                                "Change Password",
+                                "ChangePassword",
+                                "Admin",
+                                new { id = user.Id },
+                                new { @class = "btn btn-warning" }
+                                )
+                    }
                     @Html.ActionLink(
                             "Delete",
                             "TrainerDelete",

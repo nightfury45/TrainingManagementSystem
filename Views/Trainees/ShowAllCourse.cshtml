@@ -4,7 +4,7 @@
 }
 
 <h2>Course Overview</h2>
-@using (Html.BeginForm("ShowAllCourse", "TraineeController", FormMethod.Get))
+@using (Html.BeginForm("ShowAllCourse", "Trainees", FormMethod.Get))
 {
     <div class="form-group">
         @Html.TextBox("searchString", null, new { placeholder = "Search by Name ..." })
