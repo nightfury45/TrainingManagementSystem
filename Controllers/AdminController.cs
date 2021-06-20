@@ -156,7 +156,6 @@ namespace TrainingManagementSystem.Controllers
             var viewModel = new StaffViewModel()
             {
                 User = staff,
-
             };
 
             return View(viewModel);
@@ -199,7 +198,6 @@ namespace TrainingManagementSystem.Controllers
             var viewModel = new TrainerViewModel()
             {
                 Trainer = trainerInDb,
-
             };
 
             return View(viewModel);
@@ -231,8 +229,8 @@ namespace TrainingManagementSystem.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("ShowTrainer");
-
         }
+
         [HttpGet]
         public ActionResult TraineeEdit(string id)
         {
@@ -246,7 +244,6 @@ namespace TrainingManagementSystem.Controllers
             var viewModel = new TraineeViewModel()
             {
                 Trainee = traineeInDb,
-
             };
 
             return View(viewModel);

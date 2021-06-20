@@ -8,6 +8,7 @@ using TrainingManagementSystem.Models;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using TrainingManagementSystem.ViewModels;
+using System.Net;
 
 namespace TrainingManagementSystem.Controllers
 {
@@ -59,6 +60,36 @@ namespace TrainingManagementSystem.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Edit()
+        {
+            var userId = User.Identity.GetUserId();
+            var trainer = _context.Trainers.SingleOrDefault(t => t.UserId.Equals(userId));
+
+            if (trainer == null) return HttpNotFound();
+
+            return View(trainer);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Trainer trainer)
+        {
+            var trainerInDb = _context.Trainers.SingleOrDefault(t => t.UserId == trainer.UserId);
+
+            if (trainerInDb == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            trainerInDb.Name = trainer.Name;
+            trainerInDb.Type = trainer.Type;
+            trainerInDb.Education = trainer.Education;
+            trainerInDb.WorkPlace = trainer.WorkPlace;
+            trainerInDb.Phone = trainer.Phone;
+            trainerInDb.Email = trainer.Email;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Edit");
         }
     }
 }

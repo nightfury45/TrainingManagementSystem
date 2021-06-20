@@ -36,6 +36,7 @@
                     @if (User.IsInRole("trainer"))
                     {
                         <li>@Html.ActionLink("Courses", "Index", "Trainers")</li>
+                        <li>@Html.ActionLink("Edit my Info", "Edit", "Trainers")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
