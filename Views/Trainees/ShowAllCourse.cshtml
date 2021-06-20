@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TrainingManagementSystem.Models.Course>
+@{
+    ViewBag.Title = "ShowAllCourse";
+}
+
+<h2>Course Overview</h2>
+@using (Html.BeginForm("ShowAllCourse", "TraineeController", FormMethod.Get))
+{
+    <div class="form-group">
+        @Html.TextBox("searchString", null, new { placeholder = "Search by Name ..." })
+        <button type="submit"><i class="fa fa-search"></i>Search</button>
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Category</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.Name</td>
+                <td>@course.Description</td>
+                <td>@course.Category.Name</td>
+                <td>
+                    @Html.ActionLink(
+                        "Details",
+                        "Details",
+                        "Trainees",
+                        new { id = course.Id },
+                        new { @class = "btn btn-primary" }
+                        )
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
