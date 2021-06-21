@@ -1,4 +1,4 @@
-﻿@model TrainingManagementSystem.ViewModels.TraineeViewModel
+﻿@model TrainingManagementSystem.Models.Trainee
 
 @{
     ViewBag.Title = "TraineeEdit";
@@ -11,65 +11,65 @@
     @Html.AntiForgeryToken()
     <h4>Edit Trainee Account.</h4>
     @Html.ValidationSummary("", new { @class = "text-danger" })
-    @Html.HiddenFor(m => m.Trainee.UserId)
+    @Html.HiddenFor(m => m.UserId)
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.Name, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.Name, new { @class = "form-control" })
+            @Html.EditorFor(m => m.Name, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.Email, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.Email, new { @class = "form-control" })
+            @Html.EditorFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.Age, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Age, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.Age, new { @class = "form-control" })
+            @Html.EditorFor(m => m.Age, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.DoB, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.DoB, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.DoB, new { @class = "form-control" })
+            @Html.EditorFor(m => m.DoB, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.Education, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Education, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.Education, new { @class = "form-control" })
+            @Html.EditorFor(m => m.Education, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.ProgrammingLanguage, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.ProgrammingLanguage, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.ProgrammingLanguage, new { @class = "form-control" })
+            @Html.EditorFor(m => m.ProgrammingLanguage, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.TOEICScore, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.TOEICScore, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.TOEICScore, new { @class = "form-control" })
+            @Html.EditorFor(m => m.TOEICScore, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.ExperienceDetail, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.ExperienceDetail, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.ExperienceDetail, new { @class = "form-control" })
+            @Html.EditorFor(m => m.ExperienceDetail, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.Department, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Department, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.Department, new { @class = "form-control" })
+            @Html.EditorFor(m => m.Department, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Trainee.Address, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Trainee.Address, new { @class = "form-control" })
+            @Html.EditorFor(m => m.Address, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

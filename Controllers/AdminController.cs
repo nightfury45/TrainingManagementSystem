@@ -160,27 +160,13 @@ namespace TrainingManagementSystem.Controllers
                 .SingleOrDefault(s => s.Id == id);
             if (staff == null) return HttpNotFound();
 
-            var viewModel = new StaffViewModel()
-            {
-                User = staff,
-            };
-
-            return View(viewModel);
+            return View(staff);
         }
 
         [Authorize (Roles = "admin")]
         [HttpPost]
         public ActionResult StaffEdit(ApplicationUser user)
         {
-            if (!ModelState.IsValid)
-            {
-                var viewModel = new StaffViewModel()
-                {
-                    User = user,
-                };
-                return View(viewModel);
-            }
-
             var staff = _context.Users
                 .SingleOrDefault(s => s.Id == user.Id);
 
@@ -204,27 +190,13 @@ namespace TrainingManagementSystem.Controllers
 
             if (trainerInDb == null) return HttpNotFound();
 
-            var viewModel = new TrainerViewModel()
-            {
-                Trainer = trainerInDb,
-            };
-
-            return View(viewModel);
+            return View(trainerInDb);
         }
 
         [Authorize(Roles = "admin, staff")]
         [HttpPost]
         public ActionResult TrainerEdit(Trainer trainer, ApplicationUser user)
         {
-            if (!ModelState.IsValid)
-            {
-                var viewModel = new TrainerViewModel()
-                {
-                    Trainer = trainer,
-                };
-                return View(viewModel);
-            }
-
             var trainerUser = _context.Users
                 .SingleOrDefault(s => s.Id == user.Id);
             var trainerInDb = _context.Trainers
@@ -255,27 +227,13 @@ namespace TrainingManagementSystem.Controllers
 
             if (traineeInDb == null) return HttpNotFound();
 
-            var viewModel = new TraineeViewModel()
-            {
-                Trainee = traineeInDb,
-            };
-
-            return View(viewModel);
+            return View(traineeInDb);
         }
 
         [Authorize(Roles = "staff")]
         [HttpPost]
         public ActionResult TraineeEdit(Trainee trainee, ApplicationUser user)
         {
-            if (!ModelState.IsValid)
-            {
-                var viewModel = new TraineeViewModel()
-                {
-                    Trainee = trainee,
-                };
-                return View(viewModel);
-            }
-
             var traineeUser = _context.Users
                 .SingleOrDefault(s => s.Id == user.Id);
             var traineeInDb = _context.Trainees
@@ -298,7 +256,6 @@ namespace TrainingManagementSystem.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("ShowTrainee");
-
         }
 
         [Authorize(Roles = "admin")]
