@@ -34,6 +34,11 @@
                         <li> @Html.ActionLink("Show Trainers", "ShowTrainer", "Admin")</li>
                         <li> @Html.ActionLink("Show Trainees", "ShowTrainee", "Admin")</li>
                     }
+                    @if (User.IsInRole("trainer"))
+                    {
+                        <li>@Html.ActionLink("Courses", "Index", "Trainers")</li>
+                        <li>@Html.ActionLink("Edit my Info", "Edit", "Trainers")</li>
+                    }
                     @if (User.IsInRole("trainee"))
                     {
                         <li> @Html.ActionLink("All Course", "ShowAllCourse", "Trainees")</li>
