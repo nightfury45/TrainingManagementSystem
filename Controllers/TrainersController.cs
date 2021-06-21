@@ -12,7 +12,7 @@ using System.Net;
 
 namespace TrainingManagementSystem.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "trainer")]
     public class TrainersController : Controller
     {
         private ApplicationDbContext _context;

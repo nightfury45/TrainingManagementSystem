@@ -23,7 +23,7 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td class="list-group-item">@user.UserName</td>
+                <td class="list-group-item">@user.Email</td>
                 <td>
                     @Html.ActionLink(
                             "Details",
@@ -39,23 +39,23 @@
                             new { id = user.Id },
                             new { @class = "btn btn-default" }
                             )
-                    @if(User.IsInRole("admin"))
-                    { 
+                    @if (User.IsInRole("admin"))
+                    {
                         @Html.ActionLink(
-                                "Change Password",
-                                "ChangePassword",
-                                "Admin",
-                                new { id = user.Id },
-                                new { @class = "btn btn-warning" }
-                                )
-                    }
+                                     "Change Password",
+                                     "ChangePassword",
+                                     "Admin",
+                                     new { id = user.Id },
+                                     new { @class = "btn btn-warning" }
+                                     )
                     @Html.ActionLink(
-                            "Delete",
-                            "TrainerDelete",
-                            "Admin",
-                            new { id = user.Id },
-                            new { @class = "btn btn-danger" }
-                            )
+                                     "Delete",
+                                     "TrainerDelete",
+                                     "Admin",
+                                     new { id = user.Id },
+                                     new { @class = "btn btn-danger" }
+                                     )
+                    }
                 </td>
             </tr>
         }

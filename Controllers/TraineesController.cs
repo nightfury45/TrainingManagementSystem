@@ -10,6 +10,7 @@ using TrainingManagementSystem.Models;
 
 namespace TrainingManagementSystem.Controllers
 {
+    [Authorize(Roles = "trainee")]
     public class TraineesController : Controller
     {
         private ApplicationDbContext _context;

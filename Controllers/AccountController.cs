@@ -162,6 +162,7 @@ namespace TrainingManagementSystem.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> CreateStaff(RegisterViewModel model)
@@ -189,6 +190,7 @@ namespace TrainingManagementSystem.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [Authorize(Roles = "admin, staff")]
         public async Task<ActionResult> CreateTrainer(RegisterViewModel model)
@@ -222,13 +224,14 @@ namespace TrainingManagementSystem.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin, staff")]
+        [Authorize(Roles = "staff")]
         public ActionResult CreateTrainee()
         {
             return View();
         }
+
         [HttpPost]
-        [Authorize(Roles = "admin, staff")]
+        [Authorize(Roles = "staff")]
         public async Task<ActionResult> CreateTrainee(RegisterViewModel model)
         {
             if (ModelState.IsValid)

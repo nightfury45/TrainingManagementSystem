@@ -62,6 +62,7 @@ namespace TrainingManagementSystem.Controllers
             return View(result);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public ActionResult ShowStaff()
         {
@@ -77,6 +78,7 @@ namespace TrainingManagementSystem.Controllers
             return View(staffs);
         }
 
+        [Authorize(Roles = "admin, staff")]
         [HttpGet]
         public ActionResult ShowTrainer()
         {
@@ -92,6 +94,7 @@ namespace TrainingManagementSystem.Controllers
             return View(trainers);
         }
 
+        [Authorize(Roles = "staff")]
         [HttpGet]
         public ActionResult ShowTrainee(string searchString)
         {
@@ -108,18 +111,7 @@ namespace TrainingManagementSystem.Controllers
             return View(trainee);
         }
 
-        public ActionResult TrainerDetails(string id)
-        {
-            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-
-            var trainer = _context.Trainers
-                .SingleOrDefault(t => t.UserId == id);
-
-            if (trainer == null) return HttpNotFound();
-
-            return View(trainer);
-        }
-
+        [Authorize (Roles = "admin")]
         public ActionResult StaffDetails(string id)
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
@@ -132,6 +124,20 @@ namespace TrainingManagementSystem.Controllers
             return View(staff);
         }
 
+        [Authorize (Roles = "admin, staff")]
+        public ActionResult TrainerDetails(string id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var trainer = _context.Trainers
+                .SingleOrDefault(t => t.UserId == id);
+
+            if (trainer == null) return HttpNotFound();
+
+            return View(trainer);
+        }
+
+        [Authorize (Roles = "staff")]
         public ActionResult TraineeDetails(string id)
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
@@ -144,6 +150,7 @@ namespace TrainingManagementSystem.Controllers
             return View(trainee);
         }
 
+        [Authorize (Roles = "admin")]
         [HttpGet]
         public ActionResult StaffEdit(string id)
         {
@@ -161,6 +168,7 @@ namespace TrainingManagementSystem.Controllers
             return View(viewModel);
         }
 
+        [Authorize (Roles = "admin")]
         [HttpPost]
         public ActionResult StaffEdit(ApplicationUser user)
         {
@@ -179,12 +187,13 @@ namespace TrainingManagementSystem.Controllers
             if (staff == null) return HttpNotFound();
 
             staff.Email = user.Email;
+            staff.UserName = user.Email;
             _context.SaveChanges();
 
             return RedirectToAction("ShowStaff");
-
         }
 
+        [Authorize(Roles = "admin, staff")]
         [HttpGet]
         public ActionResult TrainerEdit(string id)
         {
@@ -203,8 +212,9 @@ namespace TrainingManagementSystem.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "admin, staff")]
         [HttpPost]
-        public ActionResult TrainerEdit(Trainer trainer)
+        public ActionResult TrainerEdit(Trainer trainer, ApplicationUser user)
         {
             if (!ModelState.IsValid)
             {
@@ -215,14 +225,17 @@ namespace TrainingManagementSystem.Controllers
                 return View(viewModel);
             }
 
+            var trainerUser = _context.Users
+                .SingleOrDefault(s => s.Id == user.Id);
             var trainerInDb = _context.Trainers
                 .SingleOrDefault(t => t.UserId == trainer.UserId);
 
             if (trainerInDb == null) return HttpNotFound();
-
             trainerInDb.Name = trainer.Name;
             trainerInDb.Type = trainer.Type;
             trainerInDb.Email = trainer.Email;
+            trainerUser.UserName = trainer.Email;
+            trainerUser.Email = trainer.Email;
             trainerInDb.WorkPlace = trainer.WorkPlace;
             trainerInDb.Phone = trainer.Phone;
             trainerInDb.Education = trainer.Education;
@@ -231,6 +244,7 @@ namespace TrainingManagementSystem.Controllers
             return RedirectToAction("ShowTrainer");
         }
 
+        [Authorize(Roles = "staff")]
         [HttpGet]
         public ActionResult TraineeEdit(string id)
         {
@@ -249,8 +263,9 @@ namespace TrainingManagementSystem.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "staff")]
         [HttpPost]
-        public ActionResult TraineeEdit(Trainee trainee)
+        public ActionResult TraineeEdit(Trainee trainee, ApplicationUser user)
         {
             if (!ModelState.IsValid)
             {
@@ -261,6 +276,8 @@ namespace TrainingManagementSystem.Controllers
                 return View(viewModel);
             }
 
+            var traineeUser = _context.Users
+                .SingleOrDefault(s => s.Id == user.Id);
             var traineeInDb = _context.Trainees
                 .SingleOrDefault(t => t.UserId == trainee.UserId);
 
@@ -268,6 +285,8 @@ namespace TrainingManagementSystem.Controllers
 
             traineeInDb.Name = trainee.Name;
             traineeInDb.Email = trainee.Email;
+            traineeUser.UserName = trainee.Email;
+            traineeUser.Email = trainee.Email;
             traineeInDb.Age = trainee.Age;
             traineeInDb.DoB = trainee.DoB;
             traineeInDb.Education = trainee.Education;
@@ -281,6 +300,8 @@ namespace TrainingManagementSystem.Controllers
             return RedirectToAction("ShowTrainee");
 
         }
+
+        [Authorize(Roles = "admin")]
         public ActionResult StaffDelete(string id)
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
@@ -296,6 +317,7 @@ namespace TrainingManagementSystem.Controllers
             return RedirectToAction("ShowStaff");
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult TrainerDelete(string id)
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
@@ -314,6 +336,7 @@ namespace TrainingManagementSystem.Controllers
             return RedirectToAction("ShowTrainer");
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult TraineeDelete(string id)
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);

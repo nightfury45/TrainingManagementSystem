@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace TrainingManagementSystem.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "staff")]
     public class CategoriesController : Controller
     {
         private ApplicationDbContext _context;
@@ -31,6 +31,7 @@ namespace TrainingManagementSystem.Controllers
             }
             return View(category);
         }
+
         [HttpGet]
         [Authorize(Roles = "admin, staff")]
         public ActionResult Create()

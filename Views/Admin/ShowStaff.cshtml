@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "ShowStaff";
 }
-<h2>Trainers List</h2>
+<h2>Staff List</h2>
 <div class="form-group">
     @Html.ActionLink(
         "Create A Staff",
@@ -24,7 +24,7 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td class="list-group-item">@user.UserName</td>
+                <td class="list-group-item">@user.Email</td>
                 <td>
                     @Html.ActionLink(
                             "Details",
