@@ -262,10 +262,7 @@
     <Compile Include="ViewModels\CourseTrainersViewModel.cs" />
     <Compile Include="ViewModels\CourseCategoriesViewModel.cs" />
     <Compile Include="ViewModels\CourseTraineesViewModel.cs" />
-    <Compile Include="ViewModels\StaffViewModel.cs" />
     <Compile Include="ViewModels\StatisticalReportViewModel.cs" />
-    <Compile Include="ViewModels\TraineeViewModel.cs" />
-    <Compile Include="ViewModels\TrainerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

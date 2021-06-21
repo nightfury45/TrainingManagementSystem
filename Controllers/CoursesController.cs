@@ -37,6 +37,7 @@ namespace TrainingManagementSystem.Controllers
             }
             return View(course);
         }
+
         [Authorize(Roles = "staff")]
         [HttpGet]
         public ActionResult Create()
@@ -47,6 +48,7 @@ namespace TrainingManagementSystem.Controllers
             };
             return View(viewModel);
         }
+
         [Authorize(Roles = "staff")]
         [HttpPost]
         public ActionResult Create(Course course)
@@ -72,6 +74,7 @@ namespace TrainingManagementSystem.Controllers
 
             return RedirectToAction("Index");
         }
+
         [Authorize(Roles = "staff")]
         public ActionResult Details(int? id)
         {
@@ -86,6 +89,7 @@ namespace TrainingManagementSystem.Controllers
 
             return View(course);
         }
+
         [Authorize(Roles = "staff")]
         public ActionResult Delete(int? id)
         {
@@ -101,6 +105,7 @@ namespace TrainingManagementSystem.Controllers
 
             return RedirectToAction("Index");
         }
+
         [Authorize(Roles = "staff")]
         [HttpGet]
         public ActionResult Edit(int? id)
@@ -120,6 +125,7 @@ namespace TrainingManagementSystem.Controllers
 
             return View(viewModel);
         }
+
         [Authorize(Roles = "staff")]
         [HttpPost]
         public ActionResult Edit(Course course)
@@ -148,6 +154,7 @@ namespace TrainingManagementSystem.Controllers
             return RedirectToAction("Index");
 
         }
+
         [Authorize(Roles = "staff")]
         [HttpGet]
         public ActionResult Report()
@@ -174,6 +181,7 @@ namespace TrainingManagementSystem.Controllers
 
             return View(viewModel);
         }
+
         [Authorize(Roles = "staff")]
         [HttpGet]
         public ActionResult ViewTrainees(int? id)
@@ -188,6 +196,7 @@ namespace TrainingManagementSystem.Controllers
 
             return View(trainees);
         }
+
         [Authorize(Roles = "staff")]
         [HttpGet]
         public ActionResult ViewTrainers(int? id)
@@ -236,6 +245,7 @@ namespace TrainingManagementSystem.Controllers
             };
             return View(viewModel);
         }
+
         [Authorize(Roles = "staff")]
         [HttpPost]
         public ActionResult AddTrainees(CourseTrainee model)
@@ -251,6 +261,7 @@ namespace TrainingManagementSystem.Controllers
 
             return RedirectToAction("ViewTrainees", new { id = model.CourseId });
         }
+
         [Authorize(Roles = "staff")]
         [HttpGet]
         public ActionResult AddTrainers(int? id)
@@ -284,6 +295,7 @@ namespace TrainingManagementSystem.Controllers
             };
             return View(viewModel);
         }
+
         [Authorize(Roles = "staff")]
         [HttpPost]
         public ActionResult AddTrainers(CourseTrainer model)
@@ -329,8 +341,5 @@ namespace TrainingManagementSystem.Controllers
             _context.SaveChanges();
             return RedirectToAction("ViewTrainers", new { id = id });
         }
-
-
-
     }
 }
