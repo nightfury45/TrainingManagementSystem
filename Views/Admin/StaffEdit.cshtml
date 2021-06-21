@@ -7,14 +7,13 @@
 @using (Html.BeginForm("StaffEdit", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Edit Trainer Account.</h4>
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     @Html.HiddenFor(m => m.Id)
 
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.Email, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
         </div>
     </div>
