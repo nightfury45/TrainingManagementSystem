@@ -33,14 +33,14 @@ namespace TrainingManagementSystem.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin, staff")]
+        [Authorize(Roles = "staff")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin, staff")]
+        [Authorize(Roles = "staff")]
         public ActionResult Create(Category category)
         {
             if (!ModelState.IsValid)

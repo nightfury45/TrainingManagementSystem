@@ -35,6 +35,19 @@ namespace TrainingManagementSystem.Controllers
             return View(course);
         }
 
+        public ActionResult Details(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var course = _context.Courses
+                .Include(c => c.Category)
+                .SingleOrDefault(c => c.Id == id);
+
+            if (course == null) return HttpNotFound();
+
+            return View(course);
+        }
+
         [HttpGet]
         public ActionResult Report()
         {
@@ -77,6 +90,7 @@ namespace TrainingManagementSystem.Controllers
         public ActionResult Edit(Trainer trainer)
         {
             var trainerInDb = _context.Trainers.SingleOrDefault(t => t.UserId == trainer.UserId);
+            var userInDb = _context.Users.SingleOrDefault(t => t.Id == trainer.UserId);
 
             if (trainerInDb == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -86,6 +100,8 @@ namespace TrainingManagementSystem.Controllers
             trainerInDb.WorkPlace = trainer.WorkPlace;
             trainerInDb.Phone = trainer.Phone;
             trainerInDb.Email = trainer.Email;
+            userInDb.Email = trainer.Email;
+            userInDb.UserName = trainer.Email;
 
             _context.SaveChanges();
 

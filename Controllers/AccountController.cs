@@ -232,6 +232,9 @@ namespace TrainingManagementSystem.Controllers
         [Authorize(Roles = "staff")]
         public async Task<ActionResult> CreateTrainee(RegisterViewModel model)
         {
+            //ModelState. IsValid indicates whether the incoming values from the request were correctly
+            //bound to the model and whether any explicitly specified validation rules
+            //were violated during the model binding process.
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };

@@ -74,11 +74,9 @@ namespace TrainingManagementSystem.Controllers
 
             return RedirectToAction("Index");
         }
-
         [Authorize(Roles = "staff")]
         public ActionResult Details(int? id)
         {
-
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
             var course = _context.Courses
